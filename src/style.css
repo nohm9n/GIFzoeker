@@ -63,6 +63,58 @@ header {
   box-shadow: none;
 }
 
+.filter-dropdown {
+  position: relative;
+}
+
+/* filter knop */
+#filterButton {
+  padding: 12px 28px;
+  background: #5c7cfa;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(92,124,250,0.4);
+}
+
+#filterButton:hover {
+  background: #4a65d4;
+}
+
+#dropdownMenu {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  display: none;
+  z-index: 10;
+  min-width: 150px;
+}
+
+#dropdownMenu li {
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#dropdownMenu li:hover {
+  background: #f0f2f5;
+}
+
+#dropdownMenu.show {
+  display: block;
+}
+
+
 .container {
   display: flex;
   flex-direction: column;

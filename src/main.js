@@ -3,6 +3,11 @@ const searchInput = document.getElementById('searchInput');
 const searchButton = document.getElementById('searchButton');
 const resultsContainer = document.getElementById('results');
 
+
+
+
+
+
 async function fetchGifs(query) {
   if (!query) {
     resultsContainer.innerHTML = '<p>Typ iets om te zoeken!</p>';
@@ -42,3 +47,18 @@ searchButton.addEventListener('click', () => {
 });
 
 
+const filterButton = document.getElementById('filterButton');
+const dropdownMenu = document.getElementById('dropdownMenu');
+
+filterButton.addEventListener('click', () => {
+  dropdownMenu.classList.toggle('show');
+});
+
+dropdownMenu.addEventListener('click', (e) => {
+  if (e.target.tagName === 'LI') {
+    const filterValue = e.target.getAttribute('data-filter');
+    searchInput.value = filterValue;
+    fetchGifs(filterValue);
+    dropdownMenu.classList.remove('show');
+  }
+});
