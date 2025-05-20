@@ -9,12 +9,15 @@
 <body>
   <div class="container">
     <header>
-      <h1>GIF Zoeker</h1>
+      <h1><strong>GIF</strong><br />Zoeker</h1>
       <input type="search" id="searchInput" placeholder="Zoek naar GIFs..." />
       <button id="searchButton">Zoek</button>
-      <div class="filter-dropdown">
+
+
+<div class="filter-dropdown">
   <button id="filterButton">Filter</button>
-  <ul id="dropdownMenu" class="hidden">
+<ul id="dropdownMenu">
+
     <li data-filter="emoties">Emoties</li>
     <li data-filter="sport">Sport</li>
     <li data-filter="celebrities">Celebrities</li>
@@ -22,12 +25,16 @@
   </ul>
 </div>
 
+      
+      <button id="favoritesButton">📁 Favorieten</button>
+
+      
     </header>
+
     <main>
       <div id="results"></div>
     </main>
   </div>
   <script src="/src/main.js"></script>
 </body>
-
 </html>
