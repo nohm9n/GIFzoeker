@@ -8,27 +8,23 @@
 </head>
 <body>
   <div class="container">
+    <h1>GIF Zoeker</h1>
     <header>
-      <h1><strong>GIF</strong><br />Zoeker</h1>
-      <input type="search" id="searchInput" placeholder="Zoek naar GIFs..." />
+      
+      <input type="search" id="searchInput" placeholder="Zoek naar GIFs..." aria-label="Zoek naar GIFs" />
       <button id="searchButton">Zoek</button>
 
+      <div class="filter-dropdown">
+        <button id="filterButton" aria-haspopup="true" aria-expanded="false">Filter</button>
+        <ul id="dropdownMenu" role="menu">
+          <li role="menuitem" tabindex="0" data-filter="emoties">Emoties</li>
+          <li role="menuitem" tabindex="0" data-filter="sport">Sport</li>
+          <li role="menuitem" tabindex="0" data-filter="celebrities">Celebrities</li>
+          <li role="menuitem" tabindex="0" data-filter="food">Food</li>
+        </ul>
+      </div>
 
-<div class="filter-dropdown">
-  <button id="filterButton">Filter</button>
-<ul id="dropdownMenu">
-
-    <li data-filter="emoties">Emoties</li>
-    <li data-filter="sport">Sport</li>
-    <li data-filter="celebrities">Celebrities</li>
-    <li data-filter="food">Food</li>
-  </ul>
-</div>
-
-      
       <button id="favoritesButton">📁 Favorieten</button>
-
-      
     </header>
 
     <main>
@@ -36,16 +32,13 @@
     </main>
   </div>
 
-
-<div id="gifModal" class="modal hidden">
-  <div class="modal-content">
-    <span id="closeModal" class="close">&times;</span>
-    <img id="modalGif" src="" alt="" />
-    <h2 id="modalTitle"></h2>
+  <div id="gifModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <button id="closeModal" class="close" aria-label="Sluit modal">&times;</button>
+      <img id="modalGif" src="" alt="" />
+      <h2 id="modalTitle"></h2>
+    </div>
   </div>
-</div>
-
-
 
   <script src="/src/main.js"></script>
 </body>

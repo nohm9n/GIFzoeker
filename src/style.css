@@ -1,3 +1,6 @@
+
+/*     Basis reset en layout     */
+
 * {
   box-sizing: border-box;
 }
@@ -11,6 +14,29 @@ body, html {
   justify-content: center;
 }
 
+
+/*         Container             */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 800px;
+  margin-top: 60px;
+}
+
+
+/*          Koptekst             */
+
+h1 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
+}
+
 header {
   background: white;
   padding: 30px 40px;
@@ -19,7 +45,11 @@ header {
   display: flex;
   gap: 12px;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
+
+/*       Zoekveld & Knoppen      */
 
 #searchInput {
   padding: 12px 20px;
@@ -32,7 +62,7 @@ header {
 
 #searchInput:focus {
   outline: none;
-  border-color: #5c7cfa; 
+  border-color: #5c7cfa;
   box-shadow: 0 0 8px rgba(92,124,250,0.5);
 }
 
@@ -59,23 +89,25 @@ header {
   box-shadow: none;
 }
 
-
 #favoritesButton {
   padding: 12px 20px;
-  background: #ffa94d;
+  background: #f6dc9f; /* geel */
   border: none;
   border-radius: 8px;
-  color: white;
+  color: #333;
   font-weight: 600;
   font-size: 1.1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  box-shadow: 0 4px 10px rgba(255, 169, 77, 0.4);
+  box-shadow: 0 4px 10px rgba(246, 220, 159, 0.4);
 }
 
 #favoritesButton:hover {
-  background: #ff922b;
+  background: #e4c87a;
 }
+
+
+/*        Filter Dropdown         */
 
 .filter-dropdown {
   position: relative;
@@ -83,7 +115,7 @@ header {
 
 #filterButton {
   padding: 12px 28px;
-  background: #5c7cfa;
+  background: #6faf67; 
   border: none;
   border-radius: 8px;
   color: white;
@@ -91,11 +123,11 @@ header {
   font-size: 1.1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  box-shadow: 0 4px 10px rgba(92,124,250,0.4);
+  box-shadow: 0 4px 10px rgba(111, 175, 103, 0.4);
 }
 
 #filterButton:hover {
-  background: #4a65d4;
+  background: #5ea158;
 }
 
 #dropdownMenu {
@@ -127,14 +159,8 @@ header {
   display: block;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 90%;
-  max-width: 800px;
-  margin-top: 60px; 
-}
+
+/*           Hoofdinhoud         */
 
 main {
   margin-top: 30px;
@@ -146,6 +172,18 @@ main {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 16px;
   justify-items: center;
+}
+
+
+/*          GIF items             */
+
+.gif-item {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.gif-item:hover {
+  transform: scale(1.3);
 }
 
 .gif-item img {
@@ -161,7 +199,6 @@ main {
   text-align: center;
   min-height: 1.2em;
 }
-
 
 .favorite-btn {
   background: none;
@@ -179,6 +216,9 @@ main {
 .favorite-btn.active {
   color: gold;
 }
+
+
+/*            Modal              */
 
 .modal {
   position: fixed;
@@ -220,12 +260,116 @@ main {
   cursor: pointer;
 }
 
-.gif-item {
-  cursor: pointer;
-  transition: transform 0.2s ease;
+
+/*          Responsive           */
+
+
+/* Tablet (max 768px) */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 20px;
+  }
+
+  #searchInput {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  #searchButton,
+  #filterButton,
+  #favoritesButton {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .filter-dropdown {
+    width: 100%;
+  }
+
+  #dropdownMenu {
+    min-width: auto;
+    width: 100%;
+  }
+
+  #results {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
 }
 
-.gif-item:hover {
-  transform: scale(1.3);
+/* Mobiel (max 480px) */
+@media (max-width: 480px) {
+  body, html {
+    padding: 0 10px;
+  }
+
+  header {
+    padding: 15px 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  #searchInput {
+    font-size: 0.9rem;
+  }
+
+  #searchButton,
+  #filterButton,
+  #favoritesButton {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  #results {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 12px;
+  }
+
+  .gif-item:hover {
+    transform: scale(1.1);
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 10px;
+  }
 }
 
+
+/*          Foutmelding          */
+
+#errorMsg {
+  color: #d93025;
+  background-color: #fce8e6;
+  border: 1px solid #d93025;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 12px 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(217, 48, 37, 0.3);
+  animation: fadeIn 0.5s ease forwards;
+  white-space: nowrap;    
+  overflow: hidden;       
+}
+
+
+/*          Animaties            */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
