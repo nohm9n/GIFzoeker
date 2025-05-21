@@ -6,43 +6,78 @@ const favoritesButton = document.getElementById('favoritesButton');
 const filterButton = document.getElementById('filterButton');
 const dropdownMenu = document.getElementById('dropdownMenu');
 
+const gifModal = document.getElementById('gifModal');
+const modalGif = document.getElementById('modalGif');
+const modalTitle = document.getElementById('modalTitle');
+const closeModal = document.getElementById('closeModal');
+
 let showingFavorites = false;
 
-searchButton.addEventListener('click', () => {
-  const query = searchInput.value.trim();
-  if (query) {
-    showingFavorites = false;
-    fetchGifs(query);
+// Favorieten bewaren als Map: key = gif.id, value = volledige gif object
+let favorites = new Map(getFavorites().map(fav => [fav.id, fav]));
+
+function saveFavorites(favsArray) {
+  localStorage.setItem('favorites', JSON.stringify(favsArray));
+}
+
+function getFavorites() {
+  return JSON.parse(localStorage.getItem('favorites')) || [];
+}
+
+function renderGifCard(gif, container) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "gif-item";
+
+  const img = document.createElement("img");
+  img.src = gif.url;
+  img.alt = gif.title || 'Geen titel';
+  img.setAttribute('data-title', gif.title || 'Geen titel');
+
+  const likeBtn = document.createElement("button");
+  likeBtn.className = "favorite-btn";
+  likeBtn.textContent = favorites.has(gif.id) ? "⭐" : "☆";
+
+  likeBtn.dataset.id = gif.id;
+
+  if (favorites.has(gif.id)) {
+    likeBtn.classList.add("active");
   }
-});
 
-favoritesButton.addEventListener('click', () => {
-  showingFavorites = true;
-  displayGifs(getFavorites());
-});
+  likeBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // voorkomt dat modal opent bij klikken op button
 
-resultsContainer.addEventListener('click', (e) => {
-  const btn = e.target.closest('.favorite-btn');
-  if (!btn) return;
+    if (favorites.has(gif.id)) {
+      favorites.delete(gif.id);
+      likeBtn.textContent = "☆";
+      likeBtn.classList.remove("active");
+    } else {
+      favorites.set(gif.id, gif);
+      likeBtn.textContent = "⭐";
+      likeBtn.classList.add("active");
+    }
 
-  const gif = {
-    id: btn.dataset.id,
-    url: btn.dataset.url,
-    title: btn.dataset.title
-  };
+    // Favorieten opslaan als array van volledige GIF objecten
+    saveFavorites(Array.from(favorites.values()));
 
-  toggleFavorite(gif);
+    // Als je op favorieten pagina bent, direct updaten
+    if (showingFavorites) {
+      displayGifs(Array.from(favorites.values()));
+    }
+  });
 
-  if (showingFavorites) {
-    displayGifs(getFavorites());
-  } else {
-    btn.classList.toggle('active');
-  }
-});
+  wrapper.appendChild(img);
+  wrapper.appendChild(likeBtn);
+  container.appendChild(wrapper);
+}
+
+// Toon GIFs in container, eerst leegmaken
+function displayGifs(gifs) {
+  resultsContainer.innerHTML = '';
+  gifs.forEach(gif => renderGifCard(gif, resultsContainer));
+}
 
 async function fetchGifs(query) {
   const url = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${encodeURIComponent(query)}&limit=20&rating=g`;
-
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -53,6 +88,7 @@ async function fetchGifs(query) {
       title: gif.title || 'Geen titel'
     }));
 
+    showingFavorites = false;
     displayGifs(gifs);
   } catch (err) {
     console.error('Fout bij ophalen:', err);
@@ -60,54 +96,19 @@ async function fetchGifs(query) {
   }
 }
 
-function displayGifs(gifs) {
- 
-  gifs = gifs.filter(gif => gif.id && gif.url);
+// Eventlisteners
 
-  const favorites = getFavorites();
-
-  resultsContainer.innerHTML = gifs.map(gif => {
-  const isFavorite = favorites.some(f => f.id === gif.id);
-  return `
-    <div class="gif-item">
-      <img src="${gif.url}" alt="${gif.title || 'Geen titel'}" 
-           data-title="${gif.title || 'Geen titel'}" />
-      <button class="favorite-btn ${isFavorite ? 'active' : ''}"
-              data-id="${gif.id}"
-              data-url="${gif.url}"
-              data-title="${gif.title}">
-        ⭐
-      </button>
-    </div>
-  `;
-}).join('');
-
-}
-
-function getFavorites() {
-  return JSON.parse(localStorage.getItem('favorites')) || [];
-}
-
-function saveFavorites(favorites) {
-  localStorage.setItem('favorites', JSON.stringify(favorites));
-}
-
-function toggleFavorite(gif) {
-  if (!gif.id || !gif.url) return;
-
-  const favorites = getFavorites();
-  const index = favorites.findIndex(f => f.id === gif.id);
-
-  if (index > -1) {
-    favorites.splice(index, 1);
-  } else {
-    favorites.push(gif);
+searchButton.addEventListener('click', () => {
+  const query = searchInput.value.trim();
+  if (query) {
+    fetchGifs(query);
   }
+});
 
-  saveFavorites(favorites);
-}
-
-
+favoritesButton.addEventListener('click', () => {
+  showingFavorites = true;
+  displayGifs(Array.from(favorites.values()));
+});
 
 filterButton.addEventListener('click', () => {
   dropdownMenu.classList.toggle('show');
@@ -122,27 +123,17 @@ dropdownMenu.addEventListener('click', (e) => {
   }
 });
 
-
-const gifModal = document.getElementById('gifModal');
-const modalGif = document.getElementById('modalGif');
-const modalTitle = document.getElementById('modalTitle');
-const closeModal = document.getElementById('closeModal');
-
-// Open modal als op een GIF geklikt wordt
+// Modal openen bij klikken op GIF (niet op button)
 resultsContainer.addEventListener('click', (e) => {
   const gifImg = e.target.closest('img');
   if (gifImg && gifImg.parentElement.classList.contains('gif-item')) {
-    const gifItem = gifImg.parentElement;
-    const gifUrl = gifImg.src;
-const title = gifImg.getAttribute('data-title');
-
-    modalGif.src = gifUrl;
+    const title = gifImg.getAttribute('data-title');
+    modalGif.src = gifImg.src;
     modalTitle.textContent = title;
     gifModal.classList.remove('hidden');
   }
 });
 
-// Sluit modal bij klik op het kruisje
 closeModal.addEventListener('click', () => {
   gifModal.classList.add('hidden');
 });
