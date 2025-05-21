@@ -67,20 +67,21 @@ function displayGifs(gifs) {
   const favorites = getFavorites();
 
   resultsContainer.innerHTML = gifs.map(gif => {
-    const isFavorite = favorites.some(f => f.id === gif.id);
-    return `
-      <div class="gif-item">
-        <img src="${gif.url}" alt="${gif.title || 'Geen titel'}" />
-        <div class="gif-title">${gif.title || 'Geen titel'}</div>
-        <button class="favorite-btn ${isFavorite ? 'active' : ''}"
-                data-id="${gif.id}"
-                data-url="${gif.url}"
-                data-title="${gif.title}">
-          ⭐
-        </button>
-      </div>
-    `;
-  }).join('');
+  const isFavorite = favorites.some(f => f.id === gif.id);
+  return `
+    <div class="gif-item">
+      <img src="${gif.url}" alt="${gif.title || 'Geen titel'}" 
+           data-title="${gif.title || 'Geen titel'}" />
+      <button class="favorite-btn ${isFavorite ? 'active' : ''}"
+              data-id="${gif.id}"
+              data-url="${gif.url}"
+              data-title="${gif.title}">
+        ⭐
+      </button>
+    </div>
+  `;
+}).join('');
+
 }
 
 function getFavorites() {
@@ -119,4 +120,29 @@ dropdownMenu.addEventListener('click', (e) => {
     fetchGifs(filterValue);
     dropdownMenu.classList.remove('show');
   }
+});
+
+
+const gifModal = document.getElementById('gifModal');
+const modalGif = document.getElementById('modalGif');
+const modalTitle = document.getElementById('modalTitle');
+const closeModal = document.getElementById('closeModal');
+
+// Open modal als op een GIF geklikt wordt
+resultsContainer.addEventListener('click', (e) => {
+  const gifImg = e.target.closest('img');
+  if (gifImg && gifImg.parentElement.classList.contains('gif-item')) {
+    const gifItem = gifImg.parentElement;
+    const gifUrl = gifImg.src;
+const title = gifImg.getAttribute('data-title');
+
+    modalGif.src = gifUrl;
+    modalTitle.textContent = title;
+    gifModal.classList.remove('hidden');
+  }
+});
+
+// Sluit modal bij klik op het kruisje
+closeModal.addEventListener('click', () => {
+  gifModal.classList.add('hidden');
 });
