@@ -46,7 +46,7 @@ function renderGifCard(gif, container) {
 
   const downloadBtn = document.createElement("button");
   downloadBtn.className = "download-btn";
-  downloadBtn.textContent = "⬇️";
+  downloadBtn.textContent = "⬇Download GIF";
   downloadBtn.setAttribute("title", "Download GIF");
   downloadBtn.addEventListener("click", () => {
     downloadGif(gif.url, gif.title || 'gif');
@@ -56,6 +56,8 @@ function renderGifCard(gif, container) {
   wrapper.appendChild(likeBtn);
   wrapper.appendChild(downloadBtn);
   container.appendChild(wrapper);
+  observer.observe(wrapper);
+
 }
 
 
@@ -79,13 +81,13 @@ function downloadGif(url, filename) {
 }
 
 
-function displayGifs(gifs) {
+function displayGifs(gifs, container = resultsContainer) {
   resultsContainer.innerHTML = '';
   gifs.forEach(gif => renderGifCard(gif, resultsContainer));
 }
 
 async function fetchGifs(query) {
-  const url = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${encodeURIComponent(query)}&limit=20&rating=g`;
+  const url = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${encodeURIComponent(query)}&limit=50&rating=g`;
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -193,6 +195,7 @@ resultsContainer.addEventListener('click', (e) => {
   const gifImg = e.target.closest('img');
   if (gifImg && gifImg.parentElement.classList.contains('gif-item')) {
     const title = gifImg.getAttribute('data-title');
+    const Date = gifImg.getAttribute('data-title');
     modalGif.src = gifImg.src;
     modalGif.alt = title;
     modalTitle.textContent = title;
@@ -210,8 +213,58 @@ gifModal.addEventListener('click', (e) => {
   }
 });
 
-document.getElementById('toggleDarkMode').addEventListener('click', () => {
+const toggleButton = document.getElementById('toggleDarkMode');
+
+toggleButton.addEventListener('click', () => {
   document.body.classList.toggle('dark');
   const isDark = document.body.classList.contains('dark');
   localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+  toggleButton.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const isDark = localStorage.getItem('darkMode') === 'true';
+  if (isDark) {
+    document.body.classList.add('dark');
+    toggleButton.textContent = 'Light Mode';
+  } else {
+    toggleButton.textContent = 'Dark Mode';
+  }
+});
+
+// Routing op basis van hash
+function handleRouting() {
+  const zoekScherm = document.getElementById('zoekScherm');
+  const favorietenScherm = document.getElementById('favorietenScherm');
+
+  if (window.location.hash === "#favorieten") {
+    zoekScherm.style.display = "none";
+    favorietenScherm.style.display = "block";
+    displayGifs(Array.from(favorites.values()), document.getElementById('resultsFavorieten'));
+  } else {
+    zoekScherm.style.display = "block";
+    favorietenScherm.style.display = "none";
+  }
+}
+
+window.addEventListener("hashchange", handleRouting);
+window.addEventListener("DOMContentLoaded", () => {
+  const isDark = localStorage.getItem('darkMode') === 'true';
+  if (isDark) {
+    document.body.classList.add('dark');
+    toggleButton.textContent = 'Light Mode';
+  } else {
+    toggleButton.textContent = 'Dark Mode';
+  }
+  handleRouting(); // startpagina bepalen op basis van URL
+});
+
+// === Observer API: IntersectionObserver om animatie toe te voegen wanneer een GIF zichtbaar wordt ===
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-beeld');
+      observer.unobserve(entry.target);
+    }
+  });
 });

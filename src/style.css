@@ -1,4 +1,4 @@
-/* === RESET & BASISLAYOUT === */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,7 +10,7 @@
 
 
 html, body {
-  height: 150%;
+  height: 200%;
   width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f0f2f5;
@@ -18,7 +18,7 @@ html, body {
   justify-content: center;
 }
 
-/* === CONTAINER === */
+/* === container === */
 .container {
   display: flex;
   flex-direction: column;
@@ -28,7 +28,7 @@ html, body {
   margin-top: 60px;
 }
 
-/* === TITEL EN HEADER === */
+/* ===titel en header === */
 h1 {
   text-align: center;
   margin-bottom: 20px;
@@ -49,7 +49,7 @@ header {
   align-items: center;
 }
 
-/* === INPUT EN KNOPPEN === */
+/* === input en knoppen === */
 #searchInput {
   padding: 12px 20px;
   font-size: 1.1rem;
@@ -99,7 +99,7 @@ button {
   background: #e4c87a;
 }
 
-/* === FILTER DROPDOWN === */
+/* === filter dropdown === */
 .filter-dropdown {
   position: relative;
 }
@@ -138,7 +138,7 @@ button {
   background: #f0f2f5;
 }
 
-/* === RESULTAATGRID === */
+/* === resultaat grid === */
 main {
   width: 100%;
   margin-top: 30px;
@@ -151,7 +151,7 @@ main {
   justify-items: center;
 }
 
-/* === GIF ITEMS === */
+/* === GIF items === */
 .gif-item {
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -172,7 +172,7 @@ main {
   min-height: 1.2em;
 }
 
-/* FAVORIETENKNOP */
+/* fa vorietenknop */
 .favorite-btn {
   background: none;
   border: none;
@@ -190,7 +190,7 @@ main {
   transform: scale(1.3);
 }
 
-/* === MODAL === */
+/* === modal === */
 .modal {
   position: fixed;
   inset: 0;
@@ -224,7 +224,7 @@ main {
   cursor: pointer;
 }
 
-/* === FOUTMELDING === */
+/* === foutmelding === */
 #errorMsg {
   color: #d93025;
   background-color: #fce8e6;
@@ -241,7 +241,7 @@ main {
   overflow: hidden;
 }
 
-/* === ANIMATIE === */
+/* === animatie === */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -253,7 +253,7 @@ main {
   }
 }
 
-/* === RESPONSIVE DESIGN === */
+/* === responsive design=== */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
@@ -296,7 +296,7 @@ main {
   }
 }
 
-/* === DARK MODE === */
+/* === dark mode === */
 body.dark {
   background-color: #181a1b;
   color: #f5f6f7;
@@ -361,9 +361,13 @@ body.dark {
   font-size: 1.3rem;
   color: #5c7cfa;
   text-decoration: none;
-  transition: transform 0.2s ease, color 0.3s ease;
 }
 .download-btn:hover {
   color: #3b53b0;
-  transform: scale(1.2);
+
+}
+
+.in-beeld {
+  animation: fadeIn 0.6s ease forwards;
+  opacity: 0;
 }
