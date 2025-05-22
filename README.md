@@ -16,7 +16,7 @@ Je kunt zoeken op trefwoord en filteren via een dropdown menu.
 - CSS Grid en Flexbox voor layout  
 - Vite als build-tool
 
-##Screenshots
+## Screenshots
 
 ![Zoekscherm](screenshots/screenshot1.png)
 ![Resultatenweergave](screenshots/screenshot2.png)

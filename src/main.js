@@ -12,6 +12,10 @@ const closeModal = document.getElementById('closeModal');
 
 let showingFavorites = false;
 
+
+
+
+
 // Favorieten bewaren als Map
 let favorites = new Map(getFavorites().map(fav => [fav.id, fav]));
 
@@ -36,15 +40,44 @@ function renderGifCard(gif, container) {
   likeBtn.className = "favorite-btn";
   likeBtn.textContent = favorites.has(gif.id) ? "⭐" : "☆";
   likeBtn.dataset.id = gif.id;
-
   if (favorites.has(gif.id)) {
     likeBtn.classList.add("active");
   }
 
+  const downloadBtn = document.createElement("button");
+  downloadBtn.className = "download-btn";
+  downloadBtn.textContent = "⬇️";
+  downloadBtn.setAttribute("title", "Download GIF");
+  downloadBtn.addEventListener("click", () => {
+    downloadGif(gif.url, gif.title || 'gif');
+  });
+
   wrapper.appendChild(img);
   wrapper.appendChild(likeBtn);
+  wrapper.appendChild(downloadBtn);
   container.appendChild(wrapper);
 }
+
+
+function downloadGif(url, filename) {
+  fetch(url)
+    .then(response => response.blob())
+    .then(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = `${filename}.gif`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(blobUrl);
+    })
+    .catch(err => {
+      console.error("Fout bij downloaden:", err);
+      alert("Download mislukt.");
+    });
+}
+
 
 function displayGifs(gifs) {
   resultsContainer.innerHTML = '';
@@ -175,4 +208,10 @@ gifModal.addEventListener('click', (e) => {
   if (e.target === gifModal) {
     gifModal.classList.add('hidden');
   }
+});
+
+document.getElementById('toggleDarkMode').addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  localStorage.setItem('darkMode', isDark ? 'true' : 'false');
 });

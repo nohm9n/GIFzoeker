@@ -1,22 +1,24 @@
-
-/*     Basis reset en layout     */
-
+/* === RESET & BASISLAYOUT === */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body, html {
-  height: 100%;
-  margin: 0;
+
+
+
+
+html, body {
+  height: 150%;
+  width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f0f2f5;
+  background-color: #f0f2f5;
   display: flex;
   justify-content: center;
 }
 
-
-/*         Container             */
-
+/* === CONTAINER === */
 .container {
   display: flex;
   flex-direction: column;
@@ -26,31 +28,28 @@ body, html {
   margin-top: 60px;
 }
 
-
-/*          Koptekst             */
-
+/* === TITEL EN HEADER === */
 h1 {
-  width: 100%;
   text-align: center;
   margin-bottom: 20px;
   font-size: 2rem;
   color: #333;
+  width: 100%;
 }
 
 header {
-  background: white;
+  background: #fff;
   padding: 30px 40px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
 }
 
-/*       Zoekveld & Knoppen      */
-
+/* === INPUT EN KNOPPEN === */
 #searchInput {
   padding: 12px 20px;
   font-size: 1.1rem;
@@ -66,105 +65,83 @@ header {
   box-shadow: 0 0 8px rgba(92,124,250,0.5);
 }
 
-#searchButton {
-  padding: 12px 28px;
-  background: #5c7cfa;
+button {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 12px 20px;
   border: none;
   border-radius: 8px;
-  color: white;
-  font-weight: 600;
-  font-size: 1.1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Zoekknop */
+#searchButton {
+  background: #5c7cfa;
+  color: white;
   box-shadow: 0 4px 10px rgba(92,124,250,0.4);
 }
-
 #searchButton:hover {
   background: #4a65d4;
-  box-shadow: 0 6px 14px rgba(74,101,212,0.6);
 }
-
 #searchButton:active {
   background: #3b53b0;
   box-shadow: none;
 }
 
+/* Favorietenknop */
 #favoritesButton {
-  padding: 12px 20px;
-  background: #f6dc9f; /* geel */
-  border: none;
-  border-radius: 8px;
+  background: #f6dc9f;
   color: #333;
-  font-weight: 600;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
   box-shadow: 0 4px 10px rgba(246, 220, 159, 0.4);
 }
-
 #favoritesButton:hover {
   background: #e4c87a;
 }
 
-
-/*        Filter Dropdown         */
-
+/* === FILTER DROPDOWN === */
 .filter-dropdown {
   position: relative;
 }
 
 #filterButton {
-  padding: 12px 28px;
-  background: #6faf67; 
-  border: none;
-  border-radius: 8px;
+  background: #6faf67;
   color: white;
-  font-weight: 600;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
   box-shadow: 0 4px 10px rgba(111, 175, 103, 0.4);
 }
-
 #filterButton:hover {
   background: #5ea158;
 }
 
 #dropdownMenu {
-  list-style: none;
-  margin: 0;
-  padding: 10px 0;
   position: absolute;
   top: 110%;
   left: 0;
   background: white;
+  list-style: none;
+  padding: 10px 0;
   border-radius: 8px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   display: none;
-  z-index: 10;
   min-width: 150px;
+  z-index: 10;
 }
-
+#dropdownMenu.show {
+  display: block;
+}
 #dropdownMenu li {
   padding: 10px 20px;
   cursor: pointer;
   transition: background 0.2s;
 }
-
 #dropdownMenu li:hover {
   background: #f0f2f5;
 }
 
-#dropdownMenu.show {
-  display: block;
-}
-
-
-/*           Hoofdinhoud         */
-
+/* === RESULTAATGRID === */
 main {
-  margin-top: 30px;
   width: 100%;
+  margin-top: 30px;
 }
 
 #results {
@@ -174,24 +151,19 @@ main {
   justify-items: center;
 }
 
-
-/*          GIF items             */
-
+/* === GIF ITEMS === */
 .gif-item {
   cursor: pointer;
   transition: transform 0.3s ease;
 }
-
 .gif-item:hover {
   transform: scale(1.3);
 }
-
 .gif-item img {
   width: 100%;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-
 .gif-title {
   margin-top: 6px;
   font-weight: 600;
@@ -200,43 +172,37 @@ main {
   min-height: 1.2em;
 }
 
+/* FAVORIETENKNOP */
 .favorite-btn {
   background: none;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
   color: #ccc;
-  transition: color 0.3s ease;
   margin-top: 5px;
   display: block;
   margin-left: auto;
   margin-right: auto;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
-
 .favorite-btn.active {
   color: gold;
+  transform: scale(1.3);
 }
 
-
-/*            Modal              */
-
+/* === MODAL === */
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background-color: rgba(0,0,0,0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
 }
-
 .modal.hidden {
   display: none;
 }
-
 .modal-content {
   background: white;
   padding: 20px;
@@ -246,12 +212,10 @@ main {
   width: 90%;
   position: relative;
 }
-
 .modal-content img {
   max-width: 100%;
   border-radius: 8px;
 }
-
 .close {
   position: absolute;
   top: 12px;
@@ -260,90 +224,7 @@ main {
   cursor: pointer;
 }
 
-
-/*          Responsive           */
-
-
-/* Tablet (max 768px) */
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    padding: 20px;
-  }
-
-  #searchInput {
-    width: 100%;
-    font-size: 1rem;
-  }
-
-  #searchButton,
-  #filterButton,
-  #favoritesButton {
-    width: 100%;
-    font-size: 1rem;
-    padding: 10px;
-  }
-
-  .filter-dropdown {
-    width: 100%;
-  }
-
-  #dropdownMenu {
-    min-width: auto;
-    width: 100%;
-  }
-
-  #results {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  }
-}
-
-/* Mobiel (max 480px) */
-@media (max-width: 480px) {
-  body, html {
-    padding: 0 10px;
-  }
-
-  header {
-    padding: 15px 10px;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    text-align: center;
-  }
-
-  #searchInput {
-    font-size: 0.9rem;
-  }
-
-  #searchButton,
-  #filterButton,
-  #favoritesButton {
-    font-size: 0.9rem;
-    padding: 8px;
-  }
-
-  #results {
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 12px;
-  }
-
-  .gif-item:hover {
-    transform: scale(1.1);
-  }
-
-  .modal-content {
-    width: 95%;
-    padding: 10px;
-  }
-}
-
-
-/*          Foutmelding          */
-
+/* === FOUTMELDING === */
 #errorMsg {
   color: #d93025;
   background-color: #fce8e6;
@@ -356,13 +237,11 @@ main {
   text-align: center;
   box-shadow: 0 2px 6px rgba(217, 48, 37, 0.3);
   animation: fadeIn 0.5s ease forwards;
-  white-space: nowrap;    
-  overflow: hidden;       
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-
-/*          Animaties            */
-
+/* === ANIMATIE === */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -372,4 +251,119 @@ main {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 20px;
+  }
+  #searchInput, button {
+    width: 100%;
+  }
+  #results {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+  #dropdownMenu {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  #searchInput {
+    font-size: 0.9rem;
+  }
+  button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+  #results {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 12px;
+  }
+  .gif-item:hover {
+    transform: scale(1.1);
+  }
+  .modal-content {
+    width: 95%;
+    padding: 10px;
+  }
+}
+
+/* === DARK MODE === */
+body.dark {
+  background-color: #181a1b;
+  color: #f5f6f7;
+}
+
+body.dark header {
+  background-color: #242526;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+body.dark h1 {
+  color: #f5f6f7;
+}
+
+body.dark input,
+body.dark button {
+  background-color: #2c2f33;
+  color: #f5f6f7;
+  border: 1px solid #444;
+}
+
+body.dark #searchInput:focus {
+  border-color: #5c7cfa;
+  box-shadow: 0 0 8px rgba(92,124,250,0.5);
+}
+
+body.dark #dropdownMenu {
+  background-color: #2c2f33;
+  color: #f5f6f7;
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.1);
+}
+body.dark #dropdownMenu li:hover {
+  background-color: #3a3d41;
+}
+
+body.dark .gif-item img {
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+body.dark .modal-content {
+  background-color: #242526;
+  color: #f5f6f7;
+}
+
+body.dark #errorMsg {
+  background-color: #5a1e1e;
+  border-color: #a33a3a;
+  color: #f8d7da;
+  box-shadow: 0 2px 6px rgba(163, 58, 58, 0.5);
+}
+
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+
+.download-btn {
+  display: block;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 1.3rem;
+  color: #5c7cfa;
+  text-decoration: none;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+.download-btn:hover {
+  color: #3b53b0;
+  transform: scale(1.2);
 }
