@@ -64,7 +64,7 @@ Deze Single Page Webapplicatie laat gebruikers toe om GIFs te zoeken via de Giph
 
 
 ![Light mode](screenshots/homepagelightmode.png)
-![Dark Mode](screenshots/darkmode.png)
+![Dark Mode](screenshots/homepagedarkmode.png)
 ![Zoekfunctie](screenshots/Resultaten.png)
 ![Favorieten](screenshots/favorieten.png)
 ![Filterdopdown](screenshots/Filterdropdown.png)
